@@ -1,0 +1,5 @@
+{
+    "jwtSecret": "EXPRESS-MYSQL_JS-AXIOS",
+    "tokenExpire": "2592000" 
+  }
+  

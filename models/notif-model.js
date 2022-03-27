@@ -3,7 +3,7 @@ var db = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
     password : '',
-    database : 'express_sql'
+    database : 'eventmanagerbd'
   });
 
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
         })
     },
     delete : async (idnotif,next)=>{
-        let sql = `DELETE FROM notif WHERE id=${id}`
+        let sql = `DELETE FROM notif WHERE id=${idnotif}`
         db.query(sql,(err,result) => {
             if(err) throw err;
             next(result)

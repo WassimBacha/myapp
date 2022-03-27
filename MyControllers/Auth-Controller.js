@@ -5,24 +5,24 @@ const usersModel = require("../models/users-model")
 
 module.exports = {
     login : (req,res) => {
-        let {email,password} = req.body
+        let {mail,mdp} = req.body
         
-        if (!email || !password) 
+        if (!mail || !mdp) 
             return res.status(400).json({success : false, message : "Please enter all data"})
 
-        usersModel.selectByEmail(email, user => {
+        usersModel.selectByEmail(mail, user => {
             if(!user) 
                 return res.status(400).json({success : false, message : "User does not exist"})
             
-            bcrypt.compare(password, user.password)
+            bcrypt.compare(mdp, user.mdp)
                 .then(result => {
                     if(!result) 
                         return res.status(400).json({success : false, message : "Bad credantials"})
 
-                    usersModel.selectByEmail(user.email, user =>{
+                    usersModel.selectByEmail(user.mail, user =>{
                         jwt.sign(
 
-                            {id : user.id},
+                            {id : user.iduser},
                             config.get("jwtSecret"),
                             { expiresIn: config.get("tokenExpire") },
 
@@ -32,9 +32,14 @@ module.exports = {
                                     success : true,
                                     token,
                                     user : {
-                                        id: user.id,
-                                        name: user.name,
-                                        email: user.email,
+                                        id: user.iduser,
+                                        name:  User.nom,
+                                        email: User.prenom,
+                                        name:  User.tel,
+                                        email: User.Adress,
+                                        name:  User.mail,
+                                        email: User.mdp,
+                                        email: User.type,
                                     }
                                 })
                             }
@@ -44,6 +49,6 @@ module.exports = {
         })
     },
     verifyToken : (req,res) => {
-        console.log(req.userid)
+        console.log(req.iduser)
     }
 }

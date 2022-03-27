@@ -1,41 +1,18 @@
 
-const express = require('express');
-var mysql = require('mysql');
-
-// cree une connection db connect
-const db = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password :'',
-    port : '3306'  ,
-    
-    
-   
-});
-// connection 
-db.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to mysql!");
-  });
-
-
+const express = require('express')
 
 const app = express();
-// create database 
-app.get('/createdb' , (req,res) => {
-    let sql = 'CREATE DATABASE nodemysql';
-    db.query(sql,(err,result)=>{
-        if(err) throw err ;
-        console.log(result);
-        res.send('database created');
-    });
-});
+app.use(express.json())
 
+const event = require('./routes/api/event-api')
+const user = require('./routes/api/user-api')
+const auth = require('./routes/api/auth-api')
+const reservation = require('./routes/api/reservation-api')
+app.use('/api/event',event)
+app.use('/api/user',user)
+app.use('/api/auth',auth)
+app.use('/api/reservation',reservation)
 
+const PORT = process.env.PORT || 5000;
 
-
-app.listen('5000',()=>{
-    console.log('server started on porte 3306')
-});
-
-
+app.listen(PORT,()=>console.log(`Server running on port ${PORT}`))
