@@ -37,18 +37,12 @@ module.exports = {
                                     success : true,
                                     token,
                                     user : {
-                                        iduser: message.insertId,
+                                        iduser: newUser.iduser,
                                         name: newUser.nom,
                                         email: newUser.prenom,
-                                        name: newUser.tel,
-                                        email: newUser.Adress,
-                                        name: newUser.mail,
-                                        email: newUser.mdp,
-                                        email: newUser.type,
-                                   
-                                   
-                                   
-                                   
+                                        tel: newUser.tel,
+                                        Adress: newUser.Adress,
+                                        type: newUser.type,
                                     }
                                 })
                             }

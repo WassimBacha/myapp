@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const { uuid } = require('uuidv4');
 const config = require('config')
 const usersModel = require("../models/users-model")
 
@@ -7,12 +8,12 @@ module.exports = {
     login : (req,res) => {
         let {mail,mdp} = req.body
         
-        if (!mail || !mdp) 
+        if (!mail || !mdp) {
             return res.status(400).json({success : false, message : "Please enter all data"})
-
+        }
         usersModel.selectByEmail(mail, user => {
-            if(!user) 
-                return res.status(400).json({success : false, message : "User does not exist"})
+            if(!user) {
+                return res.status(400).json({success : false, message : "User does not exist"})}
             
             bcrypt.compare(mdp, user.mdp)
                 .then(result => {
@@ -28,22 +29,22 @@ module.exports = {
 
                             (err, token)=>{
                                 if(err) throw err
-                                res.json({
+                                return res.status(200).json({
                                     success : true,
                                     token,
                                     user : {
                                         id: user.iduser,
-                                        name:  User.nom,
-                                        email: User.prenom,
-                                        name:  User.tel,
-                                        email: User.Adress,
-                                        name:  User.mail,
-                                        email: User.mdp,
-                                        email: User.type,
-                                    }
-                                })
+                                        name: user.nom,
+                                        prenom: user.prenom,
+                                        tel: user.tel,
+                                        Adress: user.Adress,
+                                        mail: user.mail,
+                                        type: user.type
+                                    },
+                                    })
                             }
                         )
+                            
                     })
                 })
         })

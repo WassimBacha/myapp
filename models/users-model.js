@@ -1,5 +1,6 @@
 
 const { type } = require('express/lib/response');
+const { uuid } = require('uuidv4');
 var mysql = require('mysql');
 var db = mysql.createConnection({
     host     : 'localhost',
@@ -26,12 +27,13 @@ module.exports = {
     },
     selectByEmail : async (email,next)=>{
         let sql = 'SELECT * FROM user WHERE mail = ?'
-        db.query(sql,mail,(err,result) => {
+        db.query(sql,email,(err,result) => {
             if(err) throw err
             next(result[0])
         })
     },
     insert : async (user,next)=>{
+        user.iduser = uuid()
         let sql =  'INSERT INTO user SET ?'
         db.query(sql,user,(err, result) => {
             if (err) throw err;

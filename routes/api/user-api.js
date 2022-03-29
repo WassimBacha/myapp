@@ -12,7 +12,7 @@ router.get('/',auth,userscontroller.get)
 // @access  Public
 router.post('/',userscontroller.post)
 
-// @route   PUT api/users
+// @route   PUT api/user
 // @desc    Update user
 // @access  Private
 router.put('/:iduser',auth,userscontroller.put)

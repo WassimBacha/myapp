@@ -3,10 +3,10 @@ const auth = require("../../middleware/auth");
 
 const authController = require('../../MyControllers/Auth-Controller')
 
-// @route   GET api/auth
+// @route   POST api/auth
 // @desc    Login user
 // @access  Public
-router.get("/", authController.login);
+router.post("/", authController.login);
 
 // @route   GET api/auth/user
 // @desc    Get current user
