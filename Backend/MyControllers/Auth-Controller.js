@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-const { uuid } = require('uuidv4');
+
 const config = require('config')
 const usersModel = require("../models/users-model")
 
@@ -12,13 +12,18 @@ module.exports = {
             return res.status(400).json({success : false, message : "Please enter all data"})
         }
         usersModel.selectByEmail(mail, user => {
-            if(!user) {
-                return res.status(400).json({success : false, message : "User does not exist"})}
             
+            if(!user) {
+                return res.status(400).json({success : false, message : "User does not exist"})
+            }
+                
+
             bcrypt.compare(mdp, user.mdp)
                 .then(result => {
                     if(!result) 
+                    
                         return res.status(400).json({success : false, message : "Bad credantials"})
+                        console.log("test1")
 
                     usersModel.selectByEmail(user.mail, user =>{
                         jwt.sign(
@@ -43,9 +48,12 @@ module.exports = {
                                     },
                                     })
                             }
-                        )
                             
+                        )
                     })
+                })
+                .catch(err => {
+                    throw err;
                 })
         })
     },

@@ -6,7 +6,7 @@ const authController = require('../../MyControllers/Auth-Controller')
 // @route   POST api/auth
 // @desc    Login user
 // @access  Public
-router.post("/", authController.login);
+router.get("/", authController.login);
 
 // @route   GET api/auth/user
 // @desc    Get current user

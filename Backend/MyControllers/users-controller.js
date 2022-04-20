@@ -11,7 +11,7 @@ module.exports = {
     getById : (req,res)=>{
         userModel.selectById(req.params.iduser, result =>{res.json(result)})
     },
-    //Resiter
+    //Register
     post : (req,res) => {
         const newUser = req.body
         if(!newUser.mail || !newUser.mdp || !newUser.nom) 
