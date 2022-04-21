@@ -32,8 +32,42 @@
 
 <script>
 import { LoginCard } from "@/components";
-
+import {login} from '../util';
 export default {
+ data() {
+            return {
+              token : localStorage.getItem('token'),
+              user :  localStorage.getItem('user'),
+                sign: {
+                    username: "",
+                    password: ""
+                },
+                errorlogin:'',
+                errorsign:''
+            }
+        },
+        methods: {
+            authenticate() {
+              console.log(this.$data.input)
+              
+              login(this.$data.input)
+                    .then((res) => {
+                       localStorage.setItem("token",res.accessToken);
+                       localStorage.setItem("user",res.username);
+                       console.log(res)
+                       this.$router.push({path: '/'});
+                         console.log('GG wp')
+                       // this.$router.push({path: '/home'});
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        this.errorlogin = error
+                        //this.$store.commit("loginFailed", {error});
+                    });
+            
+             // login()
+            }
+        },
   components: {
     LoginCard
   },
